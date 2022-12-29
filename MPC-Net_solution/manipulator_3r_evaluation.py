@@ -126,7 +126,9 @@ def plot(save_path, t_end=10.0):
 
 
 
+plot(save_path="/tmp/mpcPolicy_2022-12-21_030548.pt", t_end=20.0) # change save_path with your /path_to_policy/file.pt
 
-plot(save_path="/tmp/mpcPolicy_2022-12-21_030548.pt", t_end=20.0)
+# Horizontal policy mpcPolicy_2022-12-21_030548.pt
+# Vertical policy mpcPolicy_2022-12-18_025805
 
 plt.show()
