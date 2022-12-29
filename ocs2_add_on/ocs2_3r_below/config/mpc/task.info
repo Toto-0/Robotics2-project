@@ -1,0 +1,183 @@
+; Mode sequence
+subsystemsSequence
+{
+  [0]     0
+}
+; Template mode sequence
+templateSubsystemsSequence
+{
+  [0]     0
+}
+templateSwitchingTimes
+{
+}
+
+; multiple_shooting settings
+multiple_shooting
+{
+  dt                            0.1
+  sqpIteration                  5
+  deltaTol                      1e-3
+  printSolverStatistics         true
+  printSolverStatus             false
+  printLinesearch               false
+  useFeedbackPolicy             true
+  integratorType                RK4
+  nThreads                      4
+}
+
+; DDP settings
+ddp
+{
+  algorithm                     SLQ
+
+  nThreads                      4
+  threadPriority                50
+
+  maxNumIterations              5
+  minRelCost                    0.1
+  constraintTolerance           1e-3
+
+  displayInfo                   false
+  displayShortSummary           false
+  checkNumericalStability       false
+
+  AbsTolODE                     1e-5
+  RelTolODE                     1e-3
+  timeStep                      1e-3
+  maxNumStepsPerSecond          100000
+  backwardPassIntegratorType    ODE45
+
+  inequalityConstraintMu        100.0
+  inequalityConstraintDelta     1.1
+
+  preComputeRiccatiTerms        true
+
+  useFeedbackPolicy             true
+
+  strategy                      LINE_SEARCH
+  lineSearch
+  {
+    minStepLength                 1e-2
+    maxStepLength                 1.0
+    hessianCorrectionStrategy     DIAGONAL_SHIFT
+    hessianCorrectionMultiple     1e-3
+  }
+}
+
+; Rollout settings
+rollout
+{
+  AbsTolODE                     1e-5
+  RelTolODE                     1e-3
+  timeStep                      1e-2
+  integratorType                ODE45
+  maxNumStepsPerSecond          100000
+  checkNumericalStability       false
+}
+
+; MPC settings
+mpc
+{
+  timeHorizon                    3.0   ; [s]
+  solutionTimeWindow             1.0   ; [s]
+  coldStart                      false
+
+  debugPrint                     false
+
+  mpcDesiredFrequency            100   ; [Hz]
+  mrtDesiredFrequency            400   ; [Hz]
+}
+
+; ballbot interface settings
+ballbot_interface
+{
+  recompileLibraries       0    ; put this flag to 1 to force recompilation of dynamics library
+}
+
+
+; initial state
+initialState
+{
+  (0,0) 0.0  ; q1
+  (1,0) 0.0  ; q2
+  (2,0) 0.0  ; q3
+  (3,0) 0.0  ; dq1
+  (4,0) 0.0  ; dq2
+  (6,0) 0.0  ; dq3
+}
+
+; state weight matrix
+Q
+{
+  scaling 1e+1
+
+  (0,0) 50.0  ; q1
+  (1,1) 50.0  ; q2
+  (2,2) 50.0  ; q3
+  (3,3) 1.0   ; dq1
+  (4,4) 1.0   ; dq2
+  (5,5) 1.0   ; dq3
+}
+
+; control weight matrix
+R
+{
+  scaling 1e-0
+
+  (0,0)  2.0  ; torque wheel1
+  (1,1)  2.0  ; torque wheel2
+  (2,2)  2.0  ; torque wheel3
+}
+
+; final state weight matrix
+Q_final
+{
+  scaling 1e+0
+
+  (0,0) 10.0  ; q1
+  (1,1) 10.0  ; q2
+  (2,2) 10.0  ; q3
+  (3,3) 100.0  ; dq1
+  (4,4) 100.0  ; dq2
+  (5,5) 100.0  ; dq3
+
+}
+
+; final state constraint matrix
+F
+{
+  scaling 1e+0
+
+  (0,0) 0.0  ; q1
+  (1,1) 0.0  ; q2
+  (2,2) 0.0  ; q3
+  (0,3) 0.0  ; dq1
+  (1,4) 0.0  ; dq2
+  (2,5) 0.0  ; dq3
+
+}
+
+; final state constraint matrix
+D
+{
+  scaling 1e+0
+
+  (0,0) 1.0  ; u1
+  (1,1) 1.0  ; u2
+  (2,2) 1.0  ; u3
+
+}
+
+; final state constraint values
+final_constraint
+{
+  scaling 1e+2
+
+  (0,0) 1.0  ; q1
+  (1,0) 1.0  ; q2
+  (2,0) 1.0  ; q3
+
+}
+
+
