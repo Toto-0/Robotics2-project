@@ -16,7 +16,7 @@ sys.path.append(os.environ["HOME"]+"/Robotics2-project/devel/lib/python3/dist-pa
 
 from ocs2_3r_nom.BallbotPyBindings import mpc_interface, scalar_array, vector_array, TargetTrajectories
 from ocs2_3r_up.BallbotPyBindings_up import mpc_interface_up
-from ocs2_3r_below.BallbotPyBindings import mpc_interface_down
+from ocs2_3r_below.BallbotPyBindings_below import mpc_interface_down
 
 from PolicyNet import ExpertMixturePolicy as PolicyNet
 
